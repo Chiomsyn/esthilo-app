@@ -25,8 +25,7 @@ module.exports = {
         "tertiary-color": "#DAF7FA"
       },
       backgroundImage: {
-        'home1-bg': "url('/images/pics2.jpg')",
-        "reset-bg": "url('/images/doctor.jpeg')"
+        'home1-bg': "url('/images/pics2.jpg')"
       },
       keyframes: {
         fadeIn: {

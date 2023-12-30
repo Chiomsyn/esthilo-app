@@ -49,6 +49,11 @@ const Featured = () => {
                 </div>
               </div>
               <div className="w-full flex flex-col gap-1 pr-1 pl-5 pt-5 pb-1">
+              <div className="flex items-center">
+                    {stars.map((star, i) => (
+                      <p key={i}>{star}</p>
+                    ))}
+                  </div>
                 <h3 className="text-base font-bold">Rainbow Sequin Dress</h3>
                 <div className="text-sm font-medium flex items-center gap-2">
                   <p className="line-through text-gray-400">$12.99</p>
@@ -62,7 +67,7 @@ const Featured = () => {
           ))}
       </div>
       <div className="mt-5 grid md:hidden w-full">
-        <ul className="flex gap-10 animate-carousel hover:animate-none">
+        <ul className="flex gap-10 hover:overflow-x-auto focus:overflow-x-auto animate-carousel hover:animate-none">
           {Array(8)
             .fill("l")
             .map((e: any, i: number) => (

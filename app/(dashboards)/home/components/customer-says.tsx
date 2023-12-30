@@ -4,7 +4,7 @@ import QuotesIcon from "@/icons/quotes";
 
 const CustomerSays = () => {
   return (
-    <div className="relative flex flex-col lg:flex-row gap-5 xl:gap-10 item-center justify-center px-5 lg:px-10 xl:px-20 py-10 lg:py-20 bg-tertiary-color">
+    <div className="relative flex flex-col lg:flex-row gap-5 xl:gap-10 item-center justify-center px-5 lg:px-10 xl:px-20 py-10 lg:py-32 bg-tertiary-color">
       <div className="flex flex-col gap-5">
       <h1 className="text-3xl font-bold">What Customers Say About Us</h1>
       <p className="text-base font-medium ">
