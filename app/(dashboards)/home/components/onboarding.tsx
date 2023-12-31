@@ -65,18 +65,19 @@ const Onboarding = () => {
                 </Button>
               </div>
               <div className="lg:flex gap-5 items-center hidden ">
-                {onboardingInfo.map((info, index) =>
-                  currentIndex === index ? (
+                {onboardingInfo.map((info, i) =>
+                  currentIndex === i ? (
                     <div
-                      onClick={() => setCurrentIndex(index)}
+                    key={i}
+                      onClick={() => setCurrentIndex(i)}
                       className="ring-1 ring-secondary-color rounded-full p-1"
                     >
                       <div className="rounded-full w-2 h-2 bg-secondary-color"></div>
                     </div>
                   ) : (
                     <div
-                      key={index}
-                      onClick={() => setCurrentIndex(index)}
+                      key={i}
+                      onClick={() => setCurrentIndex(i)}
                       className="rounded-full w-3 h-3 bg-[#C6F2F7]"
                     ></div>
                   )
@@ -85,8 +86,8 @@ const Onboarding = () => {
             </div>
           </div>
           <div
-            style={{ "--image-url": `url(${info.img})` }}
-            className={`order-first lg:order-last flex-1 h-[500px] lg:h-full bg-[image:var(--image-url)] bg-no-repeat bg-cover `}
+            style={{ backgroundImage: `url(${info.img})` }}
+            className={`order-first lg:order-last flex-1 h-[500px] lg:h-full  bg-no-repeat bg-cover `}
           ></div>
         </div>
       ))}
