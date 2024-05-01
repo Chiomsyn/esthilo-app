@@ -30,23 +30,32 @@ export const services: ServicesProps[] = [
   {
     title: "Free Shipping",
     description: "No need to worry about cost",
-   icon: <FastShippingIcon className="hover:text-secondary-color"/>,
+    icon: <FastShippingIcon className="group-hover:text-secondary-color" />,
   },
-  
+
   {
     title: "Secured Payments",
     description: "Easy free online transaction",
-    icon: <SafePaymentIcon size={32} className="hover:text-secondary-color"/>,
+    icon: (
+      <SafePaymentIcon size={32} className="group-hover:text-secondary-color" />
+    ),
   },
   {
     title: "Easy Returns",
     description: "Return easily with warranty",
-    icon: <EasyReturnIcon size={32} className="hover:text-secondary-color"/>,
+    icon: (
+      <EasyReturnIcon size={32} className="group-hover:text-secondary-color" />
+    ),
   },
 
   {
     title: "24/7 Support",
     description: "24Hrs a day, 7days a week",
-    icon: <CustomerServiceIcon size={32} className="hover:text-secondary-color"/>,
+    icon: (
+      <CustomerServiceIcon
+        size={32}
+        className="group-hover:text-secondary-color"
+      />
+    ),
   },
 ];

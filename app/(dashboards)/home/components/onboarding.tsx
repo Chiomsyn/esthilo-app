@@ -40,16 +40,16 @@ const Onboarding = () => {
     return () => clearInterval(intervalId);
   }, [currentIndex, interval]);
 
-  const securedUrl: any = "/images/pics2.jpg"
+  const securedUrl: any = "/images/pics2.jpg";
 
   return (
-    <div className="flex w-full h-fit">
+    <div className="flex w-full h-fit bg-white">
       {onboardingInfo.map((info, index) => (
         <div
           key={index}
           className={`w-full ${
             index === currentIndex ? "block" : "hidden"
-          } grid lg:grid-cols-2 lg:h-[700px] gap-10 lg:gap-0`}
+          } grid lg:grid-cols-2 lg:h-[800px] gap-10 lg:gap-0`}
         >
           <div className="flex flex-col items-start lg:justify-center px-5 lg:px-[10%] ">
             <div className="w-fit flex flex-col gap-10">
@@ -68,7 +68,7 @@ const Onboarding = () => {
                 {onboardingInfo.map((info, i) =>
                   currentIndex === i ? (
                     <div
-                    key={i}
+                      key={i}
                       onClick={() => setCurrentIndex(i)}
                       className="ring-1 ring-secondary-color rounded-full p-1"
                     >

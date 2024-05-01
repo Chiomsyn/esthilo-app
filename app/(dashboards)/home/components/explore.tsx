@@ -3,8 +3,8 @@ import React from "react";
 
 const Explore = () => {
   return (
-    <div className="w-full grid lg:grid-cols-2 lg:h-[700px] gap-10 lg:gap-0 my-10 md:py-20 px-5 lg:px-20">
-      <div className=" h-[500px] lg:h-full bg-home1-bg bg-no-repeat bg-cover bg-center"></div>
+    <div className="w-full grid lg:grid-cols-2 lg:h-[950px] gap-10 lg:gap-0 my-10 md:py-24 px-5 lg:px-20">
+      <div className=" h-[500px] rounded-lg lg:h-full bg-home1-bg bg-no-repeat bg-cover bg-center"></div>
       <div className="flex flex-col items-start lg:justify-center px-1 lg:px-10">
         <div className="w-fit flex flex-col gap-10">
           <div className="lg:w-[90%] lg:gap-10 gap-5 flex flex-col">
