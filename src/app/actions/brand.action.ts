@@ -40,11 +40,11 @@ export async function createBrand(data: { name: string }) {
       data: { name },
     });
 
-    revalidatePath("/admin/brand");
+    revalidatePath("/admin/settings/brand");
 
     return {
       success: true,
-      message: "Category created successfully",
+      message: "Brand created successfully",
     };
   } catch (error) {
     return { success: false, message: formatError(error) };

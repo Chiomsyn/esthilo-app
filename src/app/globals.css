@@ -80,6 +80,17 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+.container {
+  @apply mt-10;
+}
+.container2 {
+  @apply my-20;
+}
+
+.wrapper {
+  @apply max-w-7xl mx-auto xl:px-0 lg:px-10 px-4;
+}
+
 @layer base {
   body {
     @apply bg-gray-50;
@@ -164,46 +175,22 @@
   pointer-events: none;
 }
 
-/* globals.css */
-.scroller ul.animate-scroll {
-  animation: scroll var(--animation-duration, 60s) linear infinite;
-  animation-direction: var(--animation-direction, forwards);
-  will-change: transform;
-}
-
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
+@media (max-width: 768px) {
+  @keyframes carousel {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
-  100% {
-    transform: translateX(-50%);
+
+  .animate-carousel {
+    animation: carousel 30s linear infinite;
   }
-}
 
-.scroller ul {
-  display: flex;
-  width: max-content;
-}
-.scroller li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@keyframes carousel {
-  0% {
-    transform: translateX(0%);
+  /* Stop animation on hover */
+  .animate-carousel:hover {
+    animation-play-state: paused;
   }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-carousel {
-  animation: carousel 30s linear infinite;
-}
-
-/* Stop animation on hover */
-.animate-carousel:hover {
-  animation-play-state: paused;
 }

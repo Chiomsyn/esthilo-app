@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import AdminLayout from "@/components/admin-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -143,310 +142,307 @@ export default function OrderDetailPage() {
   };
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-between"
-        >
-          <div className="flex items-center gap-4">
-            <Link href="/admin/orders">
-              <Button variant="ghost" size="icon">
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-            </Link>
-            <div>
-              <h1 className="font-serif text-3xl font-bold text-charcoal">
-                Order {orderDetail.id}
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Placed on {formatDate(orderDetail.orderDate)}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Badge className={getStatusColor(orderDetail.status)}>
-              {orderDetail.status.charAt(0).toUpperCase() +
-                orderDetail.status.slice(1)}
-            </Badge>
-            <Select defaultValue={orderDetail.status}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="processing">Processing</SelectItem>
-                <SelectItem value="shipped">Shipped</SelectItem>
-                <SelectItem value="delivered">Delivered</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button className="bg-sec-main hover:bg-sec-main/90 text-white">
-              Update Status
+    <div className="space-y-6">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center justify-between"
+      >
+        <div className="flex items-center gap-4">
+          <Link href="/admin/orders">
+            <Button variant="ghost" size="sm">
+              <ArrowLeft className="h-5 w-5" />
             </Button>
+          </Link>
+          <div>
+            <h1 className="font-serif text-3xl font-bold text-charcoal">
+              Order {orderDetail.id}
+            </h1>
+            <p className="text-gray-600 mt-1">
+              Placed on {formatDate(orderDetail.orderDate)}
+            </p>
           </div>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Order Items */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Package className="h-5 w-5 text-sec-main" />
-                    Order Items
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {orderDetail.items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex items-center gap-4 p-4 border rounded-lg"
-                      >
-                        <Image
-                          width={1000}
-                          height={1000}
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.name}
-                          className="w-16 h-16 object-cover rounded-lg"
-                        />
-                        <div className="flex-1">
-                          <h4 className="font-medium">{item.name}</h4>
-                          <p className="text-sm text-gray-600">
-                            {item.brand} • {item.size}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            Quantity: {item.quantity}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">
-                            ${(item.price * item.quantity).toFixed(2)}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            ${item.price} each
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+        <div className="flex items-center gap-3">
+          <Badge className={getStatusColor(orderDetail.status)}>
+            {orderDetail.status.charAt(0).toUpperCase() +
+              orderDetail.status.slice(1)}
+          </Badge>
+          <Select defaultValue={orderDetail.status}>
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="processing">Processing</SelectItem>
+              <SelectItem value="shipped">Shipped</SelectItem>
+              <SelectItem value="delivered">Delivered</SelectItem>
+              <SelectItem value="cancelled">Cancelled</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button className="bg-sec-main hover:bg-sec-main/90 text-white">
+            Update Status
+          </Button>
+        </div>
+      </motion.div>
 
-                  <Separator className="my-4" />
-
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Subtotal</span>
-                      <span>${orderDetail.subtotal.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Shipping</span>
-                      <span>
-                        {orderDetail.shipping === 0
-                          ? "Free"
-                          : `$${orderDetail.shipping.toFixed(2)}`}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Tax</span>
-                      <span>${orderDetail.tax.toFixed(2)}</span>
-                    </div>
-                    <Separator />
-                    <div className="flex justify-between font-bold text-lg">
-                      <span>Total</span>
-                      <span>${orderDetail.total.toFixed(2)}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Order History */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-sec-main" />
-                    Order History
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {orderDetail.orderHistory.map((event, index) => (
-                      <div key={index} className="flex gap-4">
-                        <div className="w-2 h-2 bg-sec-main rounded-full mt-2 flex-shrink-0"></div>
-                        <div className="flex-1">
-                          <p className="font-medium">{event.status}</p>
-                          <p className="text-sm text-gray-600">
-                            {event.description}
-                          </p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {formatDate(event.date)}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Customer Information */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Customer Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Image
-                      width={1000}
-                      height={1000}
-                      src={orderDetail.customer.avatar || "/placeholder.svg"}
-                      alt={orderDetail.customer.name}
-                      className="w-12 h-12 rounded-full"
-                    />
-                    <div>
-                      <p className="font-medium">{orderDetail.customer.name}</p>
-                      <p className="text-sm text-gray-600">Customer</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm">
-                        {orderDetail.customer.email}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm">
-                        {orderDetail.customer.phone}
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Payment Information */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <CreditCard className="h-5 w-5 text-sec-main" />
-                    Payment
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span>Status</span>
-                    <Badge
-                      className={getPaymentStatusColor(
-                        orderDetail.paymentStatus
-                      )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Content */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Order Items */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Package className="h-5 w-5 text-sec-main" />
+                  Order Items
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {orderDetail.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-4 p-4 border rounded-lg"
                     >
-                      {orderDetail.paymentStatus.charAt(0).toUpperCase() +
-                        orderDetail.paymentStatus.slice(1)}
-                    </Badge>
+                      <Image
+                        width={1000}
+                        height={1000}
+                        src={item.image || "/placeholder.svg"}
+                        alt={item.name}
+                        className="w-16 h-16 object-cover rounded-lg"
+                      />
+                      <div className="flex-1">
+                        <h4 className="font-medium">{item.name}</h4>
+                        <p className="text-sm text-gray-600">
+                          {item.brand} • {item.size}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Quantity: {item.quantity}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-medium">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          ${item.price} each
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <Separator className="my-4" />
+
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Subtotal</span>
+                    <span>${orderDetail.subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span>Method</span>
-                    <span className="text-sm">{orderDetail.paymentMethod}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Total</span>
-                    <span className="font-medium">
-                      ${orderDetail.total.toFixed(2)}
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span>
+                      {orderDetail.shipping === 0
+                        ? "Free"
+                        : `$${orderDetail.shipping.toFixed(2)}`}
                     </span>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Shipping Information */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Truck className="h-5 w-5 text-sec-main" />
-                    Shipping
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <p className="font-medium mb-2">Method</p>
-                    <p className="text-sm text-gray-600">
-                      {orderDetail.shippingMethod}
-                    </p>
+                  <div className="flex justify-between">
+                    <span>Tax</span>
+                    <span>${orderDetail.tax.toFixed(2)}</span>
                   </div>
+                  <Separator />
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span>${orderDetail.total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
 
+          {/* Order History */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-sec-main" />
+                  Order History
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {orderDetail.orderHistory.map((event, index) => (
+                    <div key={index} className="flex gap-4">
+                      <div className="w-2 h-2 bg-sec-main rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <p className="font-medium">{event.status}</p>
+                        <p className="text-sm text-gray-600">
+                          {event.description}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {formatDate(event.date)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Customer Information */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Customer Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Image
+                    width={1000}
+                    height={1000}
+                    src={orderDetail.customer.avatar || "/placeholder.svg"}
+                    alt={orderDetail.customer.name}
+                    className="w-12 h-12 rounded-full"
+                  />
                   <div>
-                    <p className="font-medium mb-2">Estimated Delivery</p>
-                    <p className="text-sm text-gray-600">
-                      {new Date(
-                        orderDetail.estimatedDelivery
-                      ).toLocaleDateString("en-US", {
+                    <p className="font-medium">{orderDetail.customer.name}</p>
+                    <p className="text-sm text-gray-600">Customer</p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm">
+                      {orderDetail.customer.email}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-gray-400" />
+                    <span className="text-sm">
+                      {orderDetail.customer.phone}
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Payment Information */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <CreditCard className="h-5 w-5 text-sec-main" />
+                  Payment
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span>Status</span>
+                  <Badge
+                    className={getPaymentStatusColor(orderDetail.paymentStatus)}
+                  >
+                    {orderDetail.paymentStatus.charAt(0).toUpperCase() +
+                      orderDetail.paymentStatus.slice(1)}
+                  </Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Method</span>
+                  <span className="text-sm">{orderDetail.paymentMethod}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Total</span>
+                  <span className="font-medium">
+                    ${orderDetail.total.toFixed(2)}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Shipping Information */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Truck className="h-5 w-5 text-sec-main" />
+                  Shipping
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="font-medium mb-2">Method</p>
+                  <p className="text-sm text-gray-600">
+                    {orderDetail.shippingMethod}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-medium mb-2">Estimated Delivery</p>
+                  <p className="text-sm text-gray-600">
+                    {new Date(orderDetail.estimatedDelivery).toLocaleDateString(
+                      "en-US",
+                      {
                         weekday: "long",
                         month: "long",
                         day: "numeric",
                         year: "numeric",
-                      })}
-                    </p>
-                  </div>
+                      }
+                    )}
+                  </p>
+                </div>
 
-                  <div>
-                    <p className="font-medium mb-2 flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      Shipping Address
+                <div>
+                  <p className="font-medium mb-2 flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    Shipping Address
+                  </p>
+                  <div className="text-sm text-gray-600 space-y-1">
+                    <p>{orderDetail.shippingAddress.name}</p>
+                    <p>{orderDetail.shippingAddress.street}</p>
+                    <p>
+                      {orderDetail.shippingAddress.city},{" "}
+                      {orderDetail.shippingAddress.state}{" "}
+                      {orderDetail.shippingAddress.zipCode}
                     </p>
-                    <div className="text-sm text-gray-600 space-y-1">
-                      <p>{orderDetail.shippingAddress.name}</p>
-                      <p>{orderDetail.shippingAddress.street}</p>
-                      <p>
-                        {orderDetail.shippingAddress.city},{" "}
-                        {orderDetail.shippingAddress.state}{" "}
-                        {orderDetail.shippingAddress.zipCode}
-                      </p>
-                      <p>{orderDetail.shippingAddress.country}</p>
-                    </div>
+                    <p>{orderDetail.shippingAddress.country}</p>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </div>
-    </AdminLayout>
+    </div>
   );
 }

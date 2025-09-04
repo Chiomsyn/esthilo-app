@@ -26,6 +26,7 @@ import {
 import { Button } from "../ui/button";
 import { signOutUser } from "@/app/actions/user.actions";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const Navbar = () => {
   const [openSidebar, setOpenSidebar] = useState<boolean>(false);
@@ -47,7 +48,7 @@ const Navbar = () => {
   const role = session?.data?.user?.role;
 
   return (
-    <div className="sticky top-0 xl:px-20 lg:px-10 px-4 bg-base-color lg:h-16 h-14 flex-row justify-between w-full flex items-center z-50">
+    <div className="sticky top-0  bg-base-color lg:h-16 h-14 flex-row justify-between w-full flex items-center z-50">
       <div className="lg:hidden flex justify-between w-full items-center cursor-pointer">
         <div className="cursor-pointer" onClick={onOpen}>
           <HamburgerIcon size="36" className="text-white" />
@@ -58,11 +59,19 @@ const Navbar = () => {
           <CartIcon size="20" className="text-white" />
         </div>
       </div>
-      <div className="lg:flex flex-row gap-4 pr-4 hidden w-full max-w-7xl mx-auto items-center text-white justify-between">
-        <div>Esthilo</div>
+      <div className="lg:flex flex-row gap-4 pr-4 hidden w-full wrapper items-center text-white justify-between">
+        <Link href="/">
+          <Image
+            width={1000}
+            height={1000}
+            src="/images/logo.png"
+            alt="logo"
+            className="h-16 object-contain w-auto"
+          />
+        </Link>
         <div className="flex gap-5 items-center">
           {navLinks.links.map((item, index) => {
-            const isActive = pathname.startsWith(item.route);
+            const isActive = pathname === item.route;
 
             return (
               <div key={index}>

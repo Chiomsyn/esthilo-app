@@ -25,8 +25,8 @@ import ImageUploader from "./image-uploader";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { MainProduct } from "@/lib/types/type";
-import AdminLayout from "@/components/admin-layout";
 import { MultiSelect } from "@/components/ui/multi-select";
+import { sizes } from "@/lib/constants";
 
 interface ImageFile {
   id: string;
@@ -37,19 +37,18 @@ interface ImageFile {
 
 type ProductProps = Omit<MainProduct, "img">;
 
-const sizes = [
-  { value: "XXL", label: "XXL" },
-  { value: "XL", label: "XL" },
-  { value: "L", label: "L" },
-  { value: "M", label: "M" },
-  { value: "S", label: "S" },
-  { value: "XS", label: "XS" },
-];
-
 const AddProduct = ({
   brandList,
+  categoryList,
 }: {
   brandList:
+    | {
+        name: string;
+        id: string;
+        createdAt: Date;
+      }[]
+    | undefined;
+  categoryList:
     | {
         name: string;
         id: string;
@@ -168,404 +167,414 @@ const AddProduct = ({
   }, [name]);
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-4"
-        >
-          <Link href="/admin/products">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <div>
-            <h1 className="font-serif text-3xl font-bold text-sec-main">
-              Add New Product
-            </h1>
-            <p className="text-gray-600 mt-1">
-              Create a new product for your catalog.
-            </p>
-          </div>
-        </motion.div>
+    <div className="space-y-6">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center gap-4"
+      >
+        <Link href="/admin/products">
+          <Button variant="ghost" size="sm">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+        </Link>
+        <div>
+          <h1 className="font-serif text-3xl font-bold text-sec-main">
+            Add New Product
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Create a new product for your catalog.
+          </p>
+        </div>
+      </motion.div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
-        >
-          {/* Main Product Information */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Basic Information */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Basic Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div>
-                      <Label htmlFor="name">Product Name *</Label>
-                      <Input
-                        id="name"
-                        value={formData.name}
-                        onChange={(e) =>
-                          handleInputChange("name", e.target.value)
-                        }
-                        placeholder="e.g., Midnight Rose"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="brand">Brand</Label>
-
-                      <Select
-                        value={formData.brand}
-                        onValueChange={(value) =>
-                          handleInputChange("brand", value)
-                        }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select brand" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {brandList?.map((brand) => (
-                            <SelectItem key={brand.id} value={brand.id}>
-                              {brand.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <Label htmlFor="size">Size</Label>
-                      <MultiSelect
-                        options={sizes}
-                        value={formData.size}
-                        onChange={(value) => handleInputChange("size", value)}
-                        placeholder="Select sizes"
-                      />
-                    </div>
-                  </div>
-
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+      >
+        {/* Main Product Information */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Basic Information */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Basic Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
-                    <Label htmlFor="shortDescription">Short Description</Label>
+                    <Label htmlFor="name">Product Name *</Label>
                     <Input
-                      id="shortDescription"
-                      value={formData.shortDescription}
+                      id="name"
+                      value={formData.name}
                       onChange={(e) =>
-                        handleInputChange("shortDescription", e.target.value)
+                        handleInputChange("name", e.target.value)
                       }
-                      placeholder="Brief product description for listings"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="description">Full Description *</Label>
-                    <Textarea
-                      id="description"
-                      value={formData.description}
-                      onChange={(e) =>
-                        handleInputChange("description", e.target.value)
-                      }
-                      placeholder="Detailed product description..."
-                      rows={4}
+                      placeholder="e.g., Midnight Rose"
                       required
                     />
                   </div>
+                  <div>
+                    <Label htmlFor="brand">Brand</Label>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="sku">SKU</Label>
-                      <Input
-                        id="sku"
-                        value={formData.sku}
-                        onChange={(e) =>
-                          handleInputChange("sku", e.target.value)
-                        }
-                        placeholder="e.g., LX-MR-50"
-                      />
-                    </div>
+                    <Select
+                      value={formData.brand}
+                      onValueChange={(value) =>
+                        handleInputChange("brand", value)
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select brand" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {brandList?.map((brand) => (
+                          <SelectItem key={brand.id} value={brand.id}>
+                            {brand.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Pricing & Inventory */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Pricing & Inventory</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <Label htmlFor="price">Price *</Label>
-                      <Input
-                        id="price"
-                        type="number"
-                        step="0.01"
-                        value={formData.price}
-                        onChange={(e) =>
-                          handleInputChange("price", e.target.value)
-                        }
-                        placeholder="189.00"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="originalPrice">Original Price</Label>
-                      <Input
-                        id="originalPrice"
-                        type="number"
-                        step="0.01"
-                        value={formData.originalPrice}
-                        onChange={(e) =>
-                          handleInputChange("originalPrice", e.target.value)
-                        }
-                        placeholder="220.00"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="stock">Stock Quantity *</Label>
-                      <Input
-                        id="stock"
-                        type="number"
-                        value={formData.stock}
-                        onChange={(e) =>
-                          handleInputChange("stock", e.target.value)
-                        }
-                        placeholder="50"
-                        required
-                      />
-                    </div>
+                  <div>
+                    <Label htmlFor="category">Category</Label>
+                    <Select
+                      value={formData.category}
+                      onValueChange={(value) =>
+                        handleInputChange("category", value)
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categoryList?.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                  <div>
+                    <Label htmlFor="size">Size</Label>
+                    <MultiSelect
+                      options={sizes}
+                      value={formData.size}
+                      onChange={(value) => handleInputChange("size", value)}
+                      placeholder="Select sizes"
+                    />
+                  </div>
+                </div>
 
-            {/* Product Notes */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Product Notes</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {["topNotes", "middleNotes", "baseNotes"].map((noteType) => (
-                    <div key={noteType}>
-                      <Label className="capitalize">
-                        {noteType === "topNotes"
-                          ? "Top Notes"
-                          : noteType === "middleNotes"
-                          ? "Middle Notes"
-                          : "Base Notes"}
-                      </Label>
-                      <div className="space-y-2 mt-2">
-                        {Array.isArray(
-                          formData[noteType as keyof typeof formData]
-                        ) &&
-                          (
-                            formData[
-                              noteType as keyof typeof formData
-                            ] as string[]
-                          ).map((note: string, index: number) => (
-                            <div key={index} className="flex gap-2">
-                              <Input
-                                value={note}
-                                onChange={(e) =>
-                                  handleNotesChange(
+                <div>
+                  <Label htmlFor="shortDescription">Short Description</Label>
+                  <Input
+                    id="shortDescription"
+                    value={formData.shortDescription}
+                    onChange={(e) =>
+                      handleInputChange("shortDescription", e.target.value)
+                    }
+                    placeholder="Brief product description for listings"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="description">Full Description *</Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description}
+                    onChange={(e) =>
+                      handleInputChange("description", e.target.value)
+                    }
+                    placeholder="Detailed product description..."
+                    rows={4}
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="sku">SKU</Label>
+                    <Input
+                      id="sku"
+                      value={formData.sku}
+                      onChange={(e) => handleInputChange("sku", e.target.value)}
+                      placeholder="e.g., LX-MR-50"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Pricing & Inventory */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Pricing & Inventory</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="price">Price *</Label>
+                    <Input
+                      id="price"
+                      type="number"
+                      step="0.01"
+                      value={formData.price}
+                      onChange={(e) =>
+                        handleInputChange("price", e.target.value)
+                      }
+                      placeholder="189.00"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="originalPrice">Original Price</Label>
+                    <Input
+                      id="originalPrice"
+                      type="number"
+                      step="0.01"
+                      value={formData.originalPrice}
+                      onChange={(e) =>
+                        handleInputChange("originalPrice", e.target.value)
+                      }
+                      placeholder="220.00"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="stock">Stock Quantity *</Label>
+                    <Input
+                      id="stock"
+                      type="number"
+                      value={formData.stock}
+                      onChange={(e) =>
+                        handleInputChange("stock", e.target.value)
+                      }
+                      placeholder="50"
+                      required
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Product Notes */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Product Notes</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {["topNotes", "middleNotes", "baseNotes"].map((noteType) => (
+                  <div key={noteType}>
+                    <Label className="capitalize">
+                      {noteType === "topNotes"
+                        ? "Top Notes"
+                        : noteType === "middleNotes"
+                        ? "Middle Notes"
+                        : "Base Notes"}
+                    </Label>
+                    <div className="space-y-2 mt-2">
+                      {Array.isArray(
+                        formData[noteType as keyof typeof formData]
+                      ) &&
+                        (
+                          formData[
+                            noteType as keyof typeof formData
+                          ] as string[]
+                        ).map((note: string, index: number) => (
+                          <div key={index} className="flex gap-2">
+                            <Input
+                              value={note}
+                              onChange={(e) =>
+                                handleNotesChange(
+                                  noteType as
+                                    | "topNotes"
+                                    | "middleNotes"
+                                    | "baseNotes",
+                                  index,
+                                  e.target.value
+                                )
+                              }
+                              placeholder={`${
+                                noteType === "topNotes"
+                                  ? "Top"
+                                  : noteType === "middleNotes"
+                                  ? "Middle"
+                                  : "Base"
+                              } note`}
+                            />
+                            {(
+                              formData[
+                                noteType as keyof typeof formData
+                              ] as string[]
+                            ).length > 1 && (
+                              <Button
+                                type="button"
+                                variant="outlined"
+                                size="sm"
+                                onClick={() =>
+                                  removeNote(
                                     noteType as
                                       | "topNotes"
                                       | "middleNotes"
                                       | "baseNotes",
-                                    index,
-                                    e.target.value
+                                    index
                                   )
                                 }
-                                placeholder={`${
-                                  noteType === "topNotes"
-                                    ? "Top"
-                                    : noteType === "middleNotes"
-                                    ? "Middle"
-                                    : "Base"
-                                } note`}
-                              />
-                              {(
-                                formData[
-                                  noteType as keyof typeof formData
-                                ] as string[]
-                              ).length > 1 && (
-                                <Button
-                                  type="button"
-                                  variant="outlined"
-                                  size="sm"
-                                  onClick={() =>
-                                    removeNote(
-                                      noteType as
-                                        | "topNotes"
-                                        | "middleNotes"
-                                        | "baseNotes",
-                                      index
-                                    )
-                                  }
-                                >
-                                  <X className="h-4 w-4" />
-                                </Button>
-                              )}
-                            </div>
-                          ))}
-                        <Button
-                          type="button"
-                          variant="outlined"
-                          size="sm"
-                          onClick={() =>
-                            addNote(
-                              noteType as
-                                | "topNotes"
-                                | "middleNotes"
-                                | "baseNotes"
-                            )
-                          }
-                        >
-                          <Plus className="h-4 w-4 mr-2" />
-                          Add Note
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Product Images */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Product Images</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <ImageUploader images={images} setImages={setImages} />
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Product Status */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>Product Status</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="status">Status</Label>
-                    <Select
-                      value={formData.status}
-                      onValueChange={(value) =>
-                        handleInputChange("status", value)
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="active">Active</SelectItem>
-                        <SelectItem value="inactive">Inactive</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="featured"
-                        checked={formData.featured}
-                        onCheckedChange={(checked: boolean) =>
-                          handleInputChange("featured", checked as boolean)
-                        }
-                      />
-                      <Label htmlFor="featured">Featured Product</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="newArrival"
-                        checked={formData.newArrival}
-                        onCheckedChange={(checked: boolean) =>
-                          handleInputChange("newArrival", checked as boolean)
-                        }
-                      />
-                      <Label htmlFor="newArrival">New Arrival</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="limitedEdition"
-                        checked={formData.limitedEdition}
-                        onCheckedChange={(checked: boolean) =>
-                          handleInputChange(
-                            "limitedEdition",
-                            checked as boolean
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            )}
+                          </div>
+                        ))}
+                      <Button
+                        type="button"
+                        variant="outlined"
+                        size="sm"
+                        onClick={() =>
+                          addNote(
+                            noteType as "topNotes" | "middleNotes" | "baseNotes"
                           )
                         }
-                      />
-                      <Label htmlFor="limitedEdition">Limited Edition</Label>
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Note
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                ))}
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
 
-            {/* Actions */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="space-y-3"
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Product Images */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Product Images</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ImageUploader images={images} setImages={setImages} />
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Product Status */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Product Status</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="status">Status</Label>
+                  <Select
+                    value={formData.status}
+                    onValueChange={(value) =>
+                      handleInputChange("status", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="featured"
+                      checked={formData.featured}
+                      onCheckedChange={(checked: boolean) =>
+                        handleInputChange("featured", checked as boolean)
+                      }
+                    />
+                    <Label htmlFor="featured">Featured Product</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="newArrival"
+                      checked={formData.newArrival}
+                      onCheckedChange={(checked: boolean) =>
+                        handleInputChange("newArrival", checked as boolean)
+                      }
+                    />
+                    <Label htmlFor="newArrival">New Arrival</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="limitedEdition"
+                      checked={formData.limitedEdition}
+                      onCheckedChange={(checked: boolean) =>
+                        handleInputChange("limitedEdition", checked as boolean)
+                      }
+                    />
+                    <Label htmlFor="limitedEdition">Limited Edition</Label>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Actions */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="space-y-3"
+          >
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="w-full bg-sec-main hover:bg-sec-main/90 text-white"
             >
+              {isPending ? "Creating" : " Create Product"}
+            </Button>
+            <Link href="/admin/products" className="block">
               <Button
-                type="submit"
-                disabled={isPending}
-                className="w-full bg-sec-main hover:bg-sec-main/90 text-white"
+                type="button"
+                variant="outlined"
+                className="w-full bg-transparent"
               >
-                {isPending ? "Creating" : " Create Product"}
+                Cancel
               </Button>
-              <Link href="/admin/products" className="block">
-                <Button
-                  type="button"
-                  variant="outlined"
-                  className="w-full bg-transparent"
-                >
-                  Cancel
-                </Button>
-              </Link>
-            </motion.div>
-          </div>
-        </form>
-      </div>
-    </AdminLayout>
+            </Link>
+          </motion.div>
+        </div>
+      </form>
+    </div>
   );
 };
 

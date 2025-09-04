@@ -7,6 +7,13 @@ type GenProduct = Product & {
   };
 };
 
+type ProductCounts = {
+  totalCount: number;
+  activeCount: number;
+  lowCount: number;
+  outCount: number;
+};
+
 type MainProduct = {
   baseNotes: string[];
   brand: string;
@@ -31,6 +38,14 @@ type MainProduct = {
     imageName: string;
     image: string;
   }[];
+};
+
+type MainBrand = {
+  name: string;
+};
+
+type MainCategory = {
+  name: string;
 };
 
 type ProductStatus = "active" | "inactive" | "draft";

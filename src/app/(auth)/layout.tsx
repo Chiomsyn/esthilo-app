@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
 import AuthTab from "./_component/tab";
-import { SessionProvider } from "next-auth/react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (

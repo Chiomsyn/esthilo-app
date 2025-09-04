@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import AdminLayout from "@/components/admin-layout";
 
 // Mock data for dashboard
 const dashboardStats = {
@@ -96,255 +95,251 @@ export default function AdminDashboard() {
   };
 
   return (
-    <AdminLayout>
-      <div className="space-y-8">
-        {/* Header */}
+    <div className="space-y-8">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center justify-between"
+      >
+        <div>
+          <h1 className="font-serif text-3xl font-bold text-sec-main">
+            Dashboard
+          </h1>
+          <p className="text-gray-600 mt-1">
+            Welcome back! Here&apos;s what&apos;s happening with your perfume
+            business.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant={timeRange === "7d" ? "primary" : "outlined"}
+            size="sm"
+            onClick={() => setTimeRange("7d")}
+            className={
+              timeRange === "7d"
+                ? "bg-sec-main hover:bg-sec-main/90"
+                : "border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
+            }
+          >
+            7 Days
+          </Button>
+          <Button
+            variant={timeRange === "30d" ? "primary" : "outlined"}
+            size="sm"
+            onClick={() => setTimeRange("30d")}
+            className={
+              timeRange === "30d"
+                ? "bg-sec-main hover:bg-sec-main/90"
+                : "border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
+            }
+          >
+            30 Days
+          </Button>
+          <Button
+            variant={timeRange === "90d" ? "primary" : "outlined"}
+            size="sm"
+            onClick={() => setTimeRange("90d")}
+            className={
+              timeRange === "90d"
+                ? "bg-sec-main hover:bg-sec-main/90"
+                : "border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
+            }
+          >
+            90 Days
+          </Button>
+        </div>
+      </motion.div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center justify-between"
+          transition={{ delay: 0.1, duration: 0.6 }}
         >
-          <div>
-            <h1 className="font-serif text-3xl font-bold text-sec-main">
-              Dashboard
-            </h1>
-            <p className="text-gray-600 mt-1">
-              Welcome back! Here&apos;s what&apos;s happening with your perfume
-              business.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant={timeRange === "7d" ? "primary" : "outlined"}
-              size="sm"
-              onClick={() => setTimeRange("7d")}
-              className={
-                timeRange === "7d"
-                  ? "bg-sec-main hover:bg-sec-main/90"
-                  : "border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
-              }
-            >
-              7 Days
-            </Button>
-            <Button
-              variant={timeRange === "30d" ? "primary" : "outlined"}
-              size="sm"
-              onClick={() => setTimeRange("30d")}
-              className={
-                timeRange === "30d"
-                  ? "bg-sec-main hover:bg-sec-main/90"
-                  : "border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
-              }
-            >
-              30 Days
-            </Button>
-            <Button
-              variant={timeRange === "90d" ? "primary" : "outlined"}
-              size="sm"
-              onClick={() => setTimeRange("90d")}
-              className={
-                timeRange === "90d"
-                  ? "bg-sec-main hover:bg-sec-main/90"
-                  : "border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
-              }
-            >
-              90 Days
-            </Button>
-          </div>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Revenue
+              </CardTitle>
+              <DollarSign className="h-4 w-4 text-sec-main" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                ${dashboardStats.totalRevenue.toLocaleString()}
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-          >
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Revenue
-                </CardTitle>
-                <DollarSign className="h-4 w-4 text-sec-main" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  ${dashboardStats.totalRevenue.toLocaleString()}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Orders
+              </CardTitle>
+              <ShoppingBag className="h-4 w-4 text-sec-main" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {dashboardStats.totalOrders}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Orders
-                </CardTitle>
-                <ShoppingBag className="h-4 w-4 text-sec-main" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {dashboardStats.totalOrders}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Customers
+              </CardTitle>
+              <Users className="h-4 w-4 text-sec-main" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {dashboardStats.totalCustomers}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Customers
-                </CardTitle>
-                <Users className="h-4 w-4 text-sec-main" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {dashboardStats.totalCustomers}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Products
-                </CardTitle>
-                <Package className="h-4 w-4 text-sec-main" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {dashboardStats.totalProducts}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Recent Orders */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-          >
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Recent Orders</CardTitle>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-sec-main hover:text-sec-main/80"
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  View All
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {recentOrders.map((order, index) => (
-                    <motion.div
-                      key={order.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
-                      className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="space-y-1">
-                        <p className="font-medium text-sm">{order.id}</p>
-                        <p className="text-sm text-gray-600">
-                          {order.customer}
-                        </p>
-                        <p className="text-xs text-gray-500">{order.date}</p>
-                      </div>
-                      <div className="text-right space-y-1">
-                        <p className="font-semibold">${order.amount}</p>
-                        <Badge className={getStatusColor(order.status)}>
-                          {order.status}
-                        </Badge>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Top Products */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-          >
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Top Products</CardTitle>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-sec-main hover:text-sec-main/80"
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  View All
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {topProducts.map((product, index) => (
-                    <motion.div
-                      key={product.name}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
-                      className="flex items-center gap-4 p-3 border rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <Image
-                        width={1000}
-                        height={1000}
-                        src={product.image || "/placeholder.svg"}
-                        alt={product.name}
-                        className="w-12 h-12 object-cover rounded-lg"
-                      />
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{product.name}</p>
-                        <p className="text-xs text-gray-600">
-                          {product.sales} sales
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold">
-                          ${product.revenue.toLocaleString()}
-                        </p>
-                        <div className="flex items-center text-xs text-green-600">
-                          <ArrowUpRight className="h-3 w-3 mr-1" />
-                          Revenue
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+        >
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Products
+              </CardTitle>
+              <Package className="h-4 w-4 text-sec-main" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {dashboardStats.totalProducts}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
-    </AdminLayout>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Recent Orders */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Recent Orders</CardTitle>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-sec-main hover:text-sec-main/80"
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                View All
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {recentOrders.map((order, index) => (
+                  <motion.div
+                    key={order.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
+                    className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="space-y-1">
+                      <p className="font-medium text-sm">{order.id}</p>
+                      <p className="text-sm text-gray-600">{order.customer}</p>
+                      <p className="text-xs text-gray-500">{order.date}</p>
+                    </div>
+                    <div className="text-right space-y-1">
+                      <p className="font-semibold">${order.amount}</p>
+                      <Badge className={getStatusColor(order.status)}>
+                        {order.status}
+                      </Badge>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Top Products */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle>Top Products</CardTitle>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-sec-main hover:text-sec-main/80"
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                View All
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {topProducts.map((product, index) => (
+                  <motion.div
+                    key={product.name}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + index * 0.1, duration: 0.4 }}
+                    className="flex items-center gap-4 p-3 border rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <Image
+                      width={1000}
+                      height={1000}
+                      src={product.image || "/placeholder.svg"}
+                      alt={product.name}
+                      className="w-12 h-12 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <p className="font-medium text-sm">{product.name}</p>
+                      <p className="text-xs text-gray-600">
+                        {product.sales} sales
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold">
+                        ${product.revenue.toLocaleString()}
+                      </p>
+                      <div className="flex items-center text-xs text-green-600">
+                        <ArrowUpRight className="h-3 w-3 mr-1" />
+                        Revenue
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    </div>
   );
 }

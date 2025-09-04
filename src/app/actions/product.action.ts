@@ -17,21 +17,17 @@ export async function createProduct(data: MainProduct) {
       price,
       img,
       baseNotes,
-      concentration,
-      dimensions,
       featured,
       limitedEdition,
-      longevity,
       middleNotes,
       newArrival,
       originalPrice,
       shortDescription,
-      sillage,
+      category,
       sku,
       status,
       topNotes,
-      volume,
-      weight,
+      size,
     } = data;
 
     const images = await Promise.all(
@@ -52,21 +48,17 @@ export async function createProduct(data: MainProduct) {
         stock: Number(stock),
         price: Number(price),
         baseNotes,
-        concentration,
-        dimensions,
         featured,
         limitedEdition,
-        longevity,
         middleNotes,
         newArrival,
         originalPrice: Number(originalPrice),
         shortDescription,
-        sillage,
+        categoryId: category,
         sku,
         status,
         topNotes,
-        volume,
-        weight,
+        size,
         images,
       },
     });
@@ -90,12 +82,27 @@ export async function checkIfSlugExists(slug: string) {
   }
 }
 
+export async function getProductBySlug(slug: string) {
+  return await prisma.product.findFirst({
+    where: { slug: slug },
+    include: {
+      brand: {
+        select: { id: true, name: true },
+      },
+      category: {
+        select: { id: true, name: true },
+      },
+    },
+  });
+}
+
 interface GetAllProductsParams {
   query?: string;
   limit?: number;
   page?: number;
   brand?: string;
   price?: string;
+  category?: string;
   sort?: "lowest" | "highest" | "newest";
 }
 
@@ -105,6 +112,7 @@ export async function getAllProducts({
   page = 1,
   brand,
   price,
+  category,
   sort = "newest",
 }: GetAllProductsParams) {
   try {
@@ -136,6 +144,18 @@ export async function getAllProducts({
       filters.price = {
         gte: min,
         lte: max,
+      };
+    }
+
+    // Category filter
+    if (category && category !== "all") {
+      filters.category = {
+        is: {
+          name: {
+            equals: category,
+            mode: "insensitive",
+          },
+        },
       };
     }
 
@@ -171,6 +191,9 @@ export async function getAllProducts({
         take: limit,
         include: {
           brand: {
+            select: { id: true, name: true },
+          },
+          category: {
             select: { id: true, name: true },
           },
         },

@@ -9,22 +9,25 @@ export const navLinks: NavLinksProps = {
       name: "Home",
       route: "/",
     },
-
     {
       name: "Products",
       route: "/products",
     },
-    // {
-    //   name: "About Us",
-    //   route: "/about-us",
-    // },
-
     {
       name: "Contact Us",
       route: "/contact-us",
     },
   ],
 };
+
+export const sizes = [
+  { value: "XXL", label: "XXL" },
+  { value: "XL", label: "XL" },
+  { value: "L", label: "L" },
+  { value: "M", label: "M" },
+  { value: "S", label: "S" },
+  { value: "XS", label: "XS" },
+];
 
 export const services: ServicesProps[] = [
   {
@@ -53,7 +56,7 @@ export const services: ServicesProps[] = [
   },
 ];
 
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Prostore";
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Esthilo";
 export const APP_DESCRIPTION =
   process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
   "A modern ecommerce store built with Next.js";

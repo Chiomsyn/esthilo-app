@@ -4,8 +4,8 @@ import QuotesIcon from "../../../../icons/quotes";
 
 const CustomerSays = () => {
   return (
-    <div className=" bg-tertiary-color py-20">
-      <div className="relative max-w-7xl mx-auto flex flex-col lg:flex-row gap-5 xl:gap-10 item-center justify-center ">
+    <div className=" bg-tertiary-color py-40">
+      <div className="relative wrapper flex flex-col lg:flex-row gap-5 xl:gap-10 item-center justify-center ">
         <div className="flex flex-col gap-5">
           <h1 className="text-3xl font-bold">What Customers Say About Us</h1>
           <p className="text-base font-medium ">

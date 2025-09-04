@@ -60,6 +60,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const router = useRouter();
 
+  console.log(pathname.split("/")[2]);
+
   const email = session.data?.user.email;
 
   return (
@@ -87,8 +89,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               alt="logo"
               className="h-16 w-auto"
             />
-            <span className="text-xs font-semibold text-[#512260] ">
-              ThescentgallerybyElliea
+            <span className="text-xs font-semibold text-sec-main ">
+              Esthilo
             </span>
           </Link>
           <Button
@@ -104,12 +106,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <nav className="mt-8 px-4">
           <div className="space-y-2">
             {sidebarItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = item.href.includes(pathname.split("/")[2]);
               return (
                 <Link key={item.name} href={item.href}>
                   <Button
                     variant={isActive ? "primary" : "ghost"}
-                    className={`w-full justify-start cursor-pointer ${
+                    className={`w-full pl-10 justify-start cursor-pointer ${
                       isActive
                         ? "bg-sec-main hover:bg-sec-main/90 text-white "
                         : "text-gray-700 hover:bg-gray-100"

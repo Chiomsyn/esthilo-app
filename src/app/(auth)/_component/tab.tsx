@@ -7,6 +7,7 @@ import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const AuthTab = () => {
   const links = [
@@ -29,10 +30,14 @@ const AuthTab = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-4xl font-bold bg-sec-main text-shadow-2xs bg-clip-text text-transparent">
-            Esthilo
-          </h1>
         </div>
+        <Image
+          width={1000}
+          height={1000}
+          src="/images/logo.png"
+          alt="logo"
+          className="h-20 object-contain"
+        />
         <CardTitle>Welcome to Esthilo</CardTitle>
         <CardDescription>
           Sign in to your account or create a new one

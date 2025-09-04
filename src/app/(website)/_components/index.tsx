@@ -4,6 +4,7 @@ import Services from "./services";
 import Featured from "./featured";
 import TopSelling from "./top-selling";
 import CustomerSays from "./customer-says";
+import ContactForm from "./contact-form";
 
 const Home = () => {
   return (
@@ -14,7 +15,8 @@ const Home = () => {
       {/* <Explore />
       <Category /> */}
       <Featured />
-      <CustomerSays />
+      <ContactForm />
+      {/* <CustomerSays /> */}
     </div>
   );
 };

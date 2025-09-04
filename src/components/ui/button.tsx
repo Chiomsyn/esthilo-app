@@ -62,7 +62,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         className={cn(
           buttonVariants({ variant, size, rounded, className }),
-          "rounded-tr-xl rounded-bl-xl"
+          "rounded-tr-[1px] rounded-bl-xs hover:scale-105 transition-all"
         )}
         ref={ref}
         disabled={disabled || isLoading}
