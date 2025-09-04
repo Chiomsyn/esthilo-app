@@ -26,7 +26,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
@@ -257,7 +256,7 @@ export default function CustomersPage() {
                 className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center space-x-4">
-                  <Avatar>
+                  {/* <Avatar>
                     <AvatarImage
                       src={customer.avatar || "/placeholder.svg"}
                       alt={customer.name}
@@ -268,7 +267,7 @@ export default function CustomersPage() {
                         .map((n) => n[0])
                         .join("")}
                     </AvatarFallback>
-                  </Avatar>
+                  </Avatar> */}
                   <div>
                     <div className="flex items-center space-x-2">
                       <h3 className="font-semibold text-gray-900">
