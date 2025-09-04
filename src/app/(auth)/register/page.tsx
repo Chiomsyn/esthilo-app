@@ -1,8 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Register from "../_component/register";
 
 const page = () => {
-  return <Register />;
+  return (
+    <Suspense>
+      <Register />
+    </Suspense>
+  );
 };
 
 export default page;
