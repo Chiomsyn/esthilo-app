@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { GenProduct } from "@/lib/types/type";
 import { ProductImage } from "@prisma/client";
-import { sizes } from "@/lib/constants";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function ProductDetailPage({
