@@ -5,6 +5,10 @@ type GenProduct = Product & {
     id: string;
     name: string;
   };
+  category: {
+    id: string;
+    name: string;
+  };
 };
 
 type ProductCounts = {

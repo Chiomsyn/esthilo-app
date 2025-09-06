@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useMemo, useState, useTransition } from "react";
+import { use, useMemo, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,18 +16,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, X, Plus } from "lucide-react";
+import { ArrowLeft, Upload, X, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useUploadThing } from "@/hooks/use-uploadthing";
-import { checkIfSlugExists, createProduct } from "@/app/actions/product.action";
+import { checkIfSlugExists, updateProduct } from "@/app/actions/product.action";
 import ImageUploader from "./image-uploader";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { MainProduct } from "@/lib/types/type";
+import { GenProduct, MainProduct, ProductStatus } from "@/lib/types/type";
+import { ProductBrand, ProductCategory, ProductImage } from "@prisma/client";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { sizes } from "@/lib/constants";
-import { ProductBrand, ProductCategory } from "@prisma/client";
 
 interface ImageFile {
   id: string;
@@ -36,36 +36,45 @@ interface ImageFile {
   name: string;
 }
 
-type ProductProps = Omit<MainProduct, "img">;
+type ProductProps = Omit<MainProduct, "img"> & { id: string };
 
-const AddProduct = ({
+const EditProduct = ({
+  product,
   brandList,
   categoryList,
 }: {
+  product: GenProduct | null;
   brandList: ProductBrand[];
   categoryList: ProductCategory[];
 }) => {
   const [formData, setFormData] = useState<ProductProps>({
-    name: "",
-    brand: "",
-    description: "",
-    shortDescription: "",
-    price: "",
-    originalPrice: "",
-    stock: "",
-    size: [],
-    category: "",
-    topNotes: [""],
-    middleNotes: [""],
-    baseNotes: [""],
-    status: "active",
-    featured: false,
-    newArrival: false,
-    limitedEdition: false,
-    slug: "",
-    sku: "",
+    id: product?.id || "",
+    name: product?.name || "",
+    brand: product?.brand.id || "",
+    description: product?.description || "",
+    shortDescription: product?.shortDescription || "",
+    price: product?.price?.toString() || "0",
+    originalPrice: product?.originalPrice?.toString() || "0",
+    stock: product?.stock?.toString() || "0",
+    sku: product?.sku || "",
+    category: product?.category.id || "",
+    topNotes: product?.topNotes || [],
+    middleNotes: product?.middleNotes || [],
+    baseNotes: product?.baseNotes || [],
+    status: product?.status as ProductStatus,
+    featured: product?.featured || false,
+    newArrival: product?.newArrival || false,
+    limitedEdition: product?.limitedEdition || false,
+    slug: product?.slug || "",
+    size: product?.size || [],
   });
+
+  const imageUrlList = product?.images as ProductImage[];
   const [images, setImages] = useState<ImageFile[]>([]);
+  const [uploadedImgInfo, setUploadedImgInfo] = useState<{
+    deletedImages: ProductImage[];
+    uploadedImages: ProductImage[];
+  }>({ deletedImages: [], uploadedImages: imageUrlList });
 
   const { uploadFile } = useUploadThing();
   const [isPending, startTransition] = useTransition();
@@ -109,24 +118,34 @@ const AddProduct = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     startTransition(async () => {
-      await checkIfSlugExists(formData.slug);
+      // Check if slug exists incase you are updating the product name to one that already exists in db
+      if (formData.slug !== product?.slug) {
+        await checkIfSlugExists(formData.slug);
+      }
 
-      const uploadedFileList = await Promise.all(
-        images.map(async (img) => await uploadFile(img.file))
+      let img: { key: string; imageName: string; image: string }[] = [];
+
+      if (images.length > 0) {
+        const uploadedFileList = await Promise.all(
+          images.map(async (img) => await uploadFile(img.file))
+        );
+
+        img = uploadedFileList.map((uploadedFile) => {
+          return {
+            key: uploadedFile?.key,
+            imageName: uploadedFile?.name,
+            image: uploadedFile?.ufsUrl,
+          };
+        });
+      }
+
+      const res = await updateProduct(
+        {
+          ...formData,
+          img,
+        },
+        uploadedImgInfo.deletedImages
       );
-
-      const img = uploadedFileList.map((uploadedFile) => {
-        return {
-          key: uploadedFile?.key,
-          imageName: uploadedFile?.name,
-          image: uploadedFile?.ufsUrl,
-        };
-      });
-
-      const res = await createProduct({
-        ...formData,
-        img,
-      });
 
       if (!res.success) {
         toast(res.message);
@@ -170,12 +189,10 @@ const AddProduct = ({
           </Button>
         </Link>
         <div>
-          <h1 className="font-serif text-3xl font-bold text-sec-main">
-            Add New Product
+          <h1 className="font-serif text-3xl font-bold text-purple-900">
+            Edit Product
           </h1>
-          <p className="text-gray-600 mt-1">
-            Create a new product for your catalog.
-          </p>
+          <p className="text-gray-600 mt-1">Edit product for your catalog.</p>
         </div>
       </motion.div>
 
@@ -465,8 +482,8 @@ const AddProduct = ({
             <ImageUploader
               images={images}
               setImages={setImages}
-              uploadedImgInfo={{ deletedImages: [], uploadedImages: [] }}
-              setUploadedImgInfo={() => {}}
+              uploadedImgInfo={uploadedImgInfo}
+              setUploadedImgInfo={setUploadedImgInfo}
             />
           </motion.div>
 
@@ -565,4 +582,4 @@ const AddProduct = ({
   );
 };
 
-export default AddProduct;
+export default EditProduct;

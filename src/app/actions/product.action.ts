@@ -2,7 +2,7 @@
 
 import { formatError } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@prisma/client";
+import { Prisma, ProductImage } from "@prisma/client";
 import { MainProduct } from "@/lib/types/type";
 import { prisma } from "@/app/db/prismadb";
 
@@ -258,5 +258,104 @@ export async function getHighestPricedProduct() {
     return product.price;
   } catch (error) {
     console.error("[getHighestPricedProduct]", error);
+  }
+}
+
+type UpdateProductType = MainProduct & {
+  id: string;
+};
+
+export async function updateProduct(
+  data: UpdateProductType,
+  deletedImages: ProductImage[]
+) {
+  try {
+    const {
+      name,
+      slug,
+      brand,
+      description,
+      stock,
+      price,
+      img,
+      baseNotes,
+      featured,
+      limitedEdition,
+      middleNotes,
+      newArrival,
+      originalPrice,
+      shortDescription,
+      category,
+      sku,
+      status,
+      topNotes,
+      size,
+      id,
+    } = data;
+
+    const productExists = await prisma.product.findFirst({
+      where: { id: id },
+    });
+
+    if (!productExists) throw new Error("Product not found");
+
+    if (deletedImages.length > 0) {
+      await prisma.productImage.deleteMany({
+        where: { id: { in: deletedImages.map((img) => img.id) } },
+      });
+    }
+
+    let images: ProductImage[] = [];
+
+    if (img.length > 0) {
+      images = await Promise.all(
+        img.map(
+          async (el) =>
+            await prisma.productImage.create({
+              data: { key: el.key, name: el.imageName, url: el.image },
+            })
+        )
+      );
+    }
+
+    const getNotDeletedImages = await prisma.productImage.findMany({
+      where: { id: { notIn: deletedImages.map((img) => img.id) } },
+    });
+
+    const newImages = [...getNotDeletedImages, ...images];
+
+    await prisma.product.update({
+      where: { id: id },
+      data: {
+        name,
+        slug,
+        brandId: brand,
+        description,
+        stock: Number(stock),
+        price: Number(price),
+        baseNotes,
+        featured,
+        limitedEdition,
+        middleNotes,
+        newArrival,
+        originalPrice: Number(originalPrice),
+        shortDescription,
+        sku,
+        status,
+        topNotes,
+        size,
+        categoryId: category,
+        images: newImages,
+      },
+    });
+
+    revalidatePath("/dashboard/products");
+
+    return {
+      success: true,
+      message: "Product updated successfully",
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
   }
 }
