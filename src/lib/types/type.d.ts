@@ -11,6 +11,18 @@ type GenProduct = Product & {
   };
 };
 
+type GenCart = {
+  items: CartItem[];
+  itemsPrice: number;
+  totalPrice: number;
+  shippingPrice: number;
+  taxPrice: number;
+  id: string;
+  createdAt: Date;
+  userId: string | null;
+  sessionCartId: string;
+};
+
 type ProductCounts = {
   totalCount: number;
   activeCount: number;

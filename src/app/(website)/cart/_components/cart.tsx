@@ -48,7 +48,7 @@ export default function CartComp({
 
   return (
     <main className="min-h-screen ">
-      <div className="max-content padding-x py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -167,6 +167,8 @@ export default function CartComp({
                       <span>
                         {shippingInfo?.shippingRate === 0
                           ? "Free"
+                          : !shippingInfo?.shippingRate
+                          ? "₦0"
                           : `₦${shippingInfo?.shippingRate.toFixed(2)}`}
                       </span>
                     </div>

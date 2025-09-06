@@ -1,13 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { ZodError } from "zod";
 
 type ErrorWithMessage = {
   message: string;
-};
-
-type ZodError = {
-  name: string;
-  errors: Record<string, { message: string }>;
 };
 
 type PrismaError = {
@@ -33,16 +29,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatError(error: unknown): string {
   // Handle Zod errors
-  if (
-    typeof error === "object" &&
-    error !== null &&
-    "name" in error &&
-    (error as ZodError).name === "ZodError"
-  ) {
-    const zodError = error as ZodError;
-    const fieldErrors = Object.values(zodError.errors).map(
-      (err) => err.message
-    );
+  if (error instanceof ZodError) {
+    const fieldErrors = error.issues.map((issue) => issue.message);
     return fieldErrors.join(". ");
   }
 
@@ -58,12 +46,12 @@ export function formatError(error: unknown): string {
     }
   }
 
-  // Handle errors with message property
+  // Handle generic errors with message property
   if (isErrorWithMessage(error)) {
     return error.message;
   }
 
-  // Handle other error types
+  // Handle everything else (fallback)
   try {
     return typeof error === "string" ? error : JSON.stringify(error);
   } catch {
@@ -78,4 +66,14 @@ export function formatNumberWithDecimal(num: number): string {
 
 export function convertToPlainObject<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
+}
+
+export function round2(value: number | string) {
+  if (typeof value === "number") {
+    return Math.round((value + Number.EPSILON) * 100) / 100;
+  } else if (typeof value === "string") {
+    return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
+  } else {
+    throw new Error("Value is not a number or string");
+  }
 }

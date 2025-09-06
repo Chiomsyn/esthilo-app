@@ -5,14 +5,20 @@ import { Badge } from "@/components/ui/badge";
 import { Minus, Plus, Truck, Shield, RotateCcw } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { GenProduct } from "@/lib/types/type";
+import { GenCart, GenProduct } from "@/lib/types/type";
 import { ProductImage } from "@prisma/client";
 import { Card, CardContent } from "@/components/ui/card";
+import { CartItem } from "@/lib/validators";
+import AddToCart from "./add-to-cart";
 
 export default function ProductDetailPage({
   product,
+  cart,
+  existItem,
 }: {
   product: GenProduct;
+  cart: GenCart | undefined;
+  existItem: CartItem | undefined;
 }) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -72,9 +78,15 @@ export default function ProductDetailPage({
           className="space-y-6"
         >
           <div>
-            <p className="text-white bg-sec-main w-fit px-3 rounded font-medium text-sm uppercase tracking-wide mb-2">
-              {product.brand.name}
-            </p>
+            <div className="flex items-center gap-3">
+              {" "}
+              <p className="text-white bg-sec-main w-fit px-3 rounded font-medium text-sm uppercase tracking-wide mb-2">
+                {product.brand.name}
+              </p>
+              <p className="bg-sec-main/20 text-sec-main w-fit px-3 rounded font-medium text-sm uppercase tracking-wide mb-2">
+                {product.category.name}
+              </p>
+            </div>
             <h1 className="font-serif text-4xl font-bold text-charcoal mb-4">
               {product.name}
             </h1>
@@ -127,21 +139,37 @@ export default function ProductDetailPage({
           <div className="space-y-3">
             <h3 className="font-semibold text-charcoal">Quantity</h3>
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                disabled={quantity <= 1}
-              >
-                <Minus className="h-4 w-4" />
-              </button>
-              <span className="w-12 text-center font-medium">{quantity}</span>
-              <button
-                onClick={() =>
-                  setQuantity(Math.min(product.stock, quantity + 1))
-                }
-                disabled={quantity >= product.stock}
-              >
-                <Plus className="h-4 w-4" />
-              </button>
+              {existItem ? (
+                <>
+                  {" "}
+                  <AddToCart item={existItem} cart={cart} />
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="w-12 text-center font-medium">
+                    {quantity}
+                  </span>
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    onClick={() =>
+                      setQuantity(Math.min(product.stock, quantity + 1))
+                    }
+                    disabled={quantity >= product.stock}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </>
+              )}
               <span className="text-sm text-gray-500 ml-4">
                 {product.stock} in stock
               </span>
@@ -162,22 +190,37 @@ export default function ProductDetailPage({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 pt-4">
-            <Button
-              size="lg"
-              className="flex-1 border border-sec-main hover:bg-sec-main/90 bg-white hover:text-white text-sec-main h-12 cursor-pointer"
-              disabled={!product.stock}
-            >
-              Add to Cart
-            </Button>
-            <Button
-              size="lg"
-              className="flex-1 bg-sec-main border-sec-main hover:border-sec-main border hover:text-slate-700 hover:bg-white text-white h-12 cursor-pointer"
-              disabled={!product.stock}
-            >
-              Buy it now
-            </Button>
-          </div>
+          {!existItem && product.stock > 0 && (
+            <div className="flex gap-4 pt-4">
+              <AddToCart
+                item={{
+                  productId: product.id,
+                  name: product.name,
+                  slug: product.slug,
+                  price: product.price,
+                  qty: quantity,
+                  image: images![0].url,
+                  size: selectedSize,
+                }}
+                cart={cart}
+              />
+              {
+                <AddToCart
+                  item={{
+                    productId: product.id,
+                    name: product.name,
+                    slug: product.slug,
+                    price: product.price,
+                    qty: quantity,
+                    image: images![0].url,
+                    size: selectedSize,
+                  }}
+                  cart={cart}
+                  isBuy={true}
+                />
+              }
+            </div>
+          )}
 
           {/* Shipping Info */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -210,10 +253,7 @@ export default function ProductDetailPage({
           <CardContent className="p-6">
             <h3 className="font-semibold mb-4">Product Description</h3>
             <p className="text-muted-foreground leading-relaxed text-pretty">
-              {product.description} This carefully crafted piece represents the
-              perfect blend of style, comfort, and quality that Esthilo is known
-              for. Each item is designed with attention to detail and made from
-              premium materials to ensure longevity and satisfaction.
+              {product.description}
             </p>
           </CardContent>
         </Card>

@@ -7,6 +7,7 @@ import { signIn, signOut } from "../../services/auth";
 import { redirect } from "next/navigation";
 import { signUpFormSchema, signInFormSchema } from "@/lib/validators";
 import { prisma } from "@/app/db/prismadb";
+import { getMyCart } from "./cart.actions";
 
 export async function signInWithCredentials(
   prevState: unknown,
@@ -82,12 +83,20 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 
 export async function signOutUser() {
   // get current users cart and delete it so it does not persist to next user
-  // const currentCart = await getMyCart();
+  const currentCart = await getMyCart();
 
-  // if (currentCart?.id) {
-  //   await prisma.cart.delete({ where: { id: currentCart.id } });
-  // }
+  if (currentCart?.id) {
+    await prisma.cart.delete({ where: { id: currentCart.id } });
+  }
   await signOut();
 
   redirect("/login");
+}
+
+export async function getUserById(userId: string) {
+  const user = await prisma.user.findFirst({
+    where: { id: userId },
+  });
+  if (!user) throw new Error("User not found");
+  return user;
 }
