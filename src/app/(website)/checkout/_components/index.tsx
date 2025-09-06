@@ -150,7 +150,7 @@ const CheckoutComp = ({
             <Link href="/cart">
               <Button
                 variant="ghost"
-                size="icon"
+                size="sm"
                 className="text-charcoal hover:text-[#A76BCF]"
               >
                 <ArrowLeft className="h-5 w-5" />
