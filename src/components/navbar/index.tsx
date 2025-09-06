@@ -104,12 +104,12 @@ const Navbar = () => {
                 <User className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-gray-50">
+            <DropdownMenuContent className="w-56 bg-gray-50 text-gray-500">
               {session.data ? (
                 <>
                   <div className="px-3 py-2">
                     <p className="text-sm font-medium">{name}</p>
-                    <p className="text-xs text-gray-500">{email}</p>
+                    <p className="text-xs">{email}</p>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>

@@ -26,5 +26,7 @@ export default async function AdminProductsPage(props: {
 
   console.log(products, brandList, counts);
 
-  return <Product counts={counts.counts} />;
+  return (
+    <Product products={products} brands={brandList} counts={counts.counts} />
+  );
 }
