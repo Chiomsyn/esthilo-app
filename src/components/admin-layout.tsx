@@ -85,13 +85,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Image
               width={1000}
               height={1000}
-              src="/images/Logo.svg"
+              src="/images/logo.png"
               alt="logo"
               className="h-16 w-auto"
             />
-            <span className="text-xs font-semibold text-sec-main ">
-              Esthilo
-            </span>
           </Link>
           <Button
             variant="ghost"

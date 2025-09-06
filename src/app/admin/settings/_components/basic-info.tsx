@@ -1,7 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { Eye, EyeOff, Globe, CreditCard, Truck, Users } from "lucide-react";
+import { useState, useTransition } from "react";
+import {
+  Eye,
+  EyeOff,
+  Globe,
+  CreditCard,
+  Truck,
+  Users,
+  Loader,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,33 +21,48 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CompanyInfo } from "@prisma/client";
+import {
+  createCompanyInfo,
+  updateCompanyInfo,
+} from "@/app/actions/companyInfo.action";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
-const BasicInfo = () => {
+const BasicInfo = ({ info }: { info: CompanyInfo | null | undefined }) => {
+  const [isPending, startTransition] = useTransition();
   const [settings, setSettings] = useState({
-    storeName: "",
-    storeDescription: "",
-    contactEmail: "",
-    supportEmail: "",
-    phone: "",
-    address: "",
-    currency: "USD",
-    timezone: "America/New_York",
-    emailNotifications: true,
-    smsNotifications: false,
-    orderNotifications: true,
-    inventoryAlerts: true,
-    marketingEmails: true,
-    stripePublishableKey: "",
-    stripeSecretKey: "",
-    paypalClientId: "",
-    freeShippingThreshold: 0,
-    standardShippingRate: 0,
-    expressShippingRate: 0,
-    taxRate: 0,
-    enableTax: false,
-    enableInventoryTracking: true,
-    lowStockThreshold: 10,
+    storeName: info?.storeName || "",
+    storeDescription: info?.storeDescription || "",
+    contactEmail: info?.contactEmail || "",
+    supportEmail: info?.supportEmail || "",
+    phone: info?.phone || "",
+    address: info?.address || "",
   });
+
+  const handleSubmit = async () => {
+    startTransition(async () => {
+      if (!info) {
+        const res = await createCompanyInfo(settings);
+
+        if (!res.success) {
+          toast.error(res.message);
+          return;
+        } else {
+          toast.success(res.message);
+        }
+      } else {
+        const res = await updateCompanyInfo(settings, info.id);
+
+        if (!res.success) {
+          toast.error(res.message);
+          return;
+        } else {
+          toast.success(res.message);
+        }
+      }
+    });
+  };
 
   const handleSettingChange = (key: string, value: any) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
@@ -47,12 +70,31 @@ const BasicInfo = () => {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center">
-          <Globe className="w-5 h-5 mr-2" />
-          Store Information
-        </CardTitle>
-        <CardDescription>Basic information about your store</CardDescription>
+      <CardHeader className="flex items-center justify-between">
+        <div>
+          <CardTitle className="flex items-center">
+            <Globe className="w-5 h-5 mr-2" />
+            Store Information
+          </CardTitle>
+          <CardDescription>Basic information about your store</CardDescription>
+        </div>
+        <Button
+          onClick={handleSubmit}
+          disabled={isPending}
+          className={cn(
+            "px-4 cursor-pointer flex gap-2 py-[6px] text-sm rounded font-semibold",
+            "bg-[#9b59b6] hover:bg-[#9b59b6]/90 text-white cursor-pointer"
+          )}
+        >
+          {isPending ? (
+            <div className="flex items-center gap-2">
+              Submitting..
+              <Loader className="w-4 h-4 animate-spin" />
+            </div>
+          ) : (
+            "Submit"
+          )}
+        </Button>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -49,3 +49,51 @@ type MainCategory = {
 };
 
 type ProductStatus = "active" | "inactive" | "draft";
+
+type MainCompanyInfo = {
+  storeName: string;
+  storeDescription: string;
+  contactEmail: string;
+  supportEmail: string;
+  phone: string;
+  address: string;
+};
+
+type MainShipping = {
+  shippingRate: number;
+  taxRate: number;
+};
+
+type GenOrder = Order & {
+  user: {
+    name: string | null;
+    email: string;
+    phone: string | null;
+    image: string | null;
+  };
+  orderitems: {
+    name: string;
+    id: string;
+    productId: string;
+    slug: string;
+    qty: number;
+    price: number;
+    orderId: string;
+    imageId: string | null;
+    price: number;
+  }[];
+  shippingAddress: ShippingAddressSchema;
+  paymentResult: PaymentResult | null;
+};
+
+type PaymentResult = {
+  status: string;
+  id: string;
+  email_address: string;
+  pricePaid: string;
+};
+
+type SalesDataType = {
+  month: string;
+  totalSales: number;
+}[];
