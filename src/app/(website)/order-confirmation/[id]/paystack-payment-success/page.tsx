@@ -9,17 +9,12 @@ import { notFound } from "next/navigation";
 import ConfirmationInfo from "./confirmation-info";
 import { paystack } from "@/services/paystack";
 
-interface PaystackSuccessPageProps {
-  params: { id: string };
-  searchParams: { reference?: string };
-}
-
-const PaystackSuccessPage = async ({
-  params,
-  searchParams,
-}: PaystackSuccessPageProps) => {
-  const { id } = params;
-  const { reference } = searchParams;
+const PaystackSuccessPage = async (props: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ reference: string }>;
+}) => {
+  const { id } = await props.params;
+  const { reference } = await props.searchParams;
 
   // Fetch order
   const order = await getOrderById(id);
