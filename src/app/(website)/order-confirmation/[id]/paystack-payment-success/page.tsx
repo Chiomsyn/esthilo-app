@@ -14,10 +14,10 @@ const PaystackSuccessPage = async ({
   searchParams,
 }: {
   params: { id: string };
-  searchParams: Promise<{ reference?: string }>;
+  searchParams: { reference?: string };
 }) => {
-  const { id } = await params;
-  const { reference } = await searchParams;
+  const { id } = params;
+  const { reference } = searchParams;
 
   // Fetch order
   const order = await getOrderById(id);
