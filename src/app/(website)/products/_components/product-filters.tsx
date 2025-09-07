@@ -38,7 +38,7 @@ export default function ProductFilters({
           variant="ghost"
           size="sm"
           onClick={clearFilters}
-          className="text-white hover:text-[#512260]/80 bg-[#512260] cursor-pointer"
+          className="text-white hover:text-sec-main/80 bg-sec-main cursor-pointer"
         >
           Clear All
         </Button>

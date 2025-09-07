@@ -28,7 +28,7 @@ import { signOutUser } from "@/app/actions/user.actions";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
-const Navbar = () => {
+const Navbar = ({ cartCount }: { cartCount: number }) => {
   const [openSidebar, setOpenSidebar] = useState<boolean>(false);
   const pathname = usePathname();
   const session = useSession();
@@ -124,7 +124,7 @@ const Navbar = () => {
                   <DropdownMenuItem>
                     <Link
                       href={
-                        role !== "admin" ? "/admin/orders" : "/account/orders"
+                        role === "admin" ? "/admin/orders" : "/account/orders"
                       }
                       className="flex items-center"
                     >
@@ -178,7 +178,18 @@ const Navbar = () => {
               )}
             </DropdownMenuContent>
           </DropdownMenu>
-          <CartIcon size="20" className="text-white" />
+          <Link href="/cart">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hover:text-black text-white hover:bg-sec-main relative cursor-pointer"
+            >
+              <CartIcon size="20" className="" />
+              <span className="absolute -top-1 -right-1 text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                {cartCount}
+              </span>
+            </Button>
+          </Link>
         </div>
       </div>
 

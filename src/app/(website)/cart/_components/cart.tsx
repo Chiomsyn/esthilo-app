@@ -29,14 +29,14 @@ export default function CartComp({
               Your cart is empty
             </h1>
             <p className="text-gray-600 mb-8">
-              Discover our luxury fragrances and add them to your cart.
+              Discover our luxurious clothes and add them to your cart.
             </p>
             <Link href="/products">
               <Button
                 size="lg"
-                className="bg-[#512260] hover:bg-[#512260]/90 text-white cursor-pointer"
+                className="bg-sec-main hover:bg-sec-main/90 text-white cursor-pointer"
               >
-                Shop Fragrances
+                Shop Clothes
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
@@ -168,8 +168,8 @@ export default function CartComp({
                         {shippingInfo?.shippingRate === 0
                           ? "Free"
                           : !shippingInfo?.shippingRate
-                          ? "₦0"
-                          : `₦${shippingInfo?.shippingRate.toFixed(2)}`}
+                            ? "₦0"
+                            : `₦${shippingInfo?.shippingRate.toFixed(2)}`}
                       </span>
                     </div>
 
@@ -199,7 +199,7 @@ export default function CartComp({
                         <Button
                           variant="outline"
                           onClick={applyPromoCode}
-                          className="border-[#512260] text-[#512260] hover:bg-[#512260] hover:text-white bg-transparent"
+                          className="border-sec-main text-sec-main hover:bg-sec-main hover:text-white bg-transparent"
                         >
                           Apply
                         </Button>
@@ -213,7 +213,7 @@ export default function CartComp({
                   <Link href="/checkout" className="block">
                     <Button
                       size="lg"
-                      className="w-full bg-[#512260] hover:bg-[#512260]/90 text-white cursor-pointer"
+                      className="w-full bg-sec-main hover:bg-sec-main/90 text-white cursor-pointer"
                     >
                       Proceed to Checkout
                       <ArrowRight className="ml-2 h-5 w-5" />

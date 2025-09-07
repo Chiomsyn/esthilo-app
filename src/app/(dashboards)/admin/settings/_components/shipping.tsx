@@ -71,7 +71,7 @@ const Shipping = ({ info }: { info: Shipping | null | undefined }) => {
           disabled={isPending}
           className={cn(
             "px-4 cursor-pointer flex gap-2 py-[6px] text-sm rounded font-semibold",
-            "bg-[#9b59b6] hover:bg-[#9b59b6]/90 text-white cursor-pointer"
+            "bg-sec-main hover:bg-sec-main/90 text-white cursor-pointer"
           )}
         >
           {isPending ? (

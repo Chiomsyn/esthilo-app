@@ -89,8 +89,8 @@ const AddToCart = ({
       className={cn(
         "flex-1 border  h-12 cursor-pointer w-full",
         isBuy
-          ? " border-[#9b59b6] hover:bg-[#9b59b6]/90 bg-white hover:text-white text-[#512260]"
-          : "bg-[#9b59b6] hover:border-[#9b59b6] hover:text-slate-700 hover:bg-white text-white "
+          ? " border-sec-main hover:bg-sec-main/90 bg-white hover:text-white text-sec-main"
+          : "bg-sec-main hover:border-sec-main hover:text-slate-700 hover:bg-white text-white "
       )}
       onClick={handleAddToCart}
     >
