@@ -9,13 +9,15 @@ import { notFound } from "next/navigation";
 import ConfirmationInfo from "./confirmation-info";
 import { paystack } from "@/services/paystack";
 
+interface PaystackSuccessPageProps {
+  params: { id: string };
+  searchParams: { reference?: string };
+}
+
 const PaystackSuccessPage = async ({
   params,
   searchParams,
-}: {
-  params: { id: string };
-  searchParams: { reference?: string };
-}) => {
+}: PaystackSuccessPageProps) => {
   const { id } = params;
   const { reference } = searchParams;
 
