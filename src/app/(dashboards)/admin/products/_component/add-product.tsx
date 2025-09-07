@@ -42,8 +42,8 @@ const AddProduct = ({
   brandList,
   categoryList,
 }: {
-  brandList: ProductBrand[];
-  categoryList: ProductCategory[];
+  brandList: ProductBrand[] | undefined;
+  categoryList: ProductCategory[] | undefined;
 }) => {
   const [formData, setFormData] = useState<ProductProps>({
     name: "",
@@ -376,8 +376,8 @@ const AddProduct = ({
                       {noteType === "topNotes"
                         ? "Top Notes"
                         : noteType === "middleNotes"
-                        ? "Middle Notes"
-                        : "Base Notes"}
+                          ? "Middle Notes"
+                          : "Base Notes"}
                     </Label>
                     <div className="space-y-2 mt-2">
                       {Array.isArray(
@@ -405,8 +405,8 @@ const AddProduct = ({
                                 noteType === "topNotes"
                                   ? "Top"
                                   : noteType === "middleNotes"
-                                  ? "Middle"
-                                  : "Base"
+                                    ? "Middle"
+                                    : "Base"
                               } note`}
                             />
                             {(

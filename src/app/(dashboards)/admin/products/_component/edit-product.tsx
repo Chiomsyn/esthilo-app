@@ -44,8 +44,8 @@ const EditProduct = ({
   categoryList,
 }: {
   product: GenProduct | null;
-  brandList: ProductBrand[];
-  categoryList: ProductCategory[];
+  brandList: ProductBrand[] | undefined;
+  categoryList: ProductCategory[] | undefined;
 }) => {
   const [formData, setFormData] = useState<ProductProps>({
     id: product?.id || "",
@@ -393,8 +393,8 @@ const EditProduct = ({
                       {noteType === "topNotes"
                         ? "Top Notes"
                         : noteType === "middleNotes"
-                        ? "Middle Notes"
-                        : "Base Notes"}
+                          ? "Middle Notes"
+                          : "Base Notes"}
                     </Label>
                     <div className="space-y-2 mt-2">
                       {Array.isArray(
@@ -422,8 +422,8 @@ const EditProduct = ({
                                 noteType === "topNotes"
                                   ? "Top"
                                   : noteType === "middleNotes"
-                                  ? "Middle"
-                                  : "Base"
+                                    ? "Middle"
+                                    : "Base"
                               } note`}
                             />
                             {(
