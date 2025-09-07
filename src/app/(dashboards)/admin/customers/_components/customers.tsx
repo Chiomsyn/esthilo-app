@@ -26,7 +26,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
@@ -129,7 +129,7 @@ export default function CustomersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[#A76BCF]">Customers</h1>
+          <h1 className="text-3xl font-bold text-sec-main">Customers</h1>
           <p className="text-gray-600">
             Manage your customer relationships and profiles
           </p>
@@ -160,7 +160,7 @@ export default function CustomersPage() {
                 <SelectItem value="new">New</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline">
+            <Button variant="outlined">
               <Filter className="w-4 h-4 mr-2" />
               More Filters
             </Button>
@@ -187,7 +187,7 @@ export default function CustomersPage() {
                 className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center space-x-4">
-                  <Avatar>
+                  {/* <Avatar>
                     <AvatarImage
                       src={customer.avatar || "/placeholder.svg"}
                       alt={customer.name}
@@ -198,7 +198,7 @@ export default function CustomersPage() {
                         .map((n) => n[0])
                         .join("")}
                     </AvatarFallback>
-                  </Avatar>
+                  </Avatar> */}
                   <div>
                     <div className="flex items-center space-x-2">
                       <h3 className="font-semibold text-gray-900">
@@ -246,12 +246,12 @@ export default function CustomersPage() {
                   </div>
 
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger>
                       <Button variant="ghost" size="sm">
                         <MoreHorizontal className="w-4 h-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent>
                       <DropdownMenuItem>
                         <Eye className="w-4 h-4 mr-2" />
                         View Profile

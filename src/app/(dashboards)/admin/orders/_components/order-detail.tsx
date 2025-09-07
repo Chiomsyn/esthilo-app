@@ -131,7 +131,7 @@ export default function OrderDetailPage({
       >
         <div className="flex items-center gap-4">
           <Link href="/admin/orders">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="sm">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
@@ -170,7 +170,7 @@ export default function OrderDetailPage({
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-[#A76BCF]" />
+                  <Package className="h-5 w-5 text-sec-main" />
                   Order Items
                 </CardTitle>
               </CardHeader>
@@ -247,7 +247,7 @@ export default function OrderDetailPage({
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-[#A76BCF]" />
+                  <Calendar className="h-5 w-5 text-sec-main" />
                   Order History
                 </CardTitle>
               </CardHeader>
@@ -255,7 +255,7 @@ export default function OrderDetailPage({
                 <div className="space-y-4">
                   {orderDetail.orderHistory.map((event, index) => (
                     <div key={index} className="flex gap-4">
-                      <div className="w-2 h-2 bg-[#A76BCF] rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-sec-main rounded-full mt-2 flex-shrink-0"></div>
                       <div className="flex-1">
                         <p className="font-medium">{event.status}</p>
                         <p className="text-sm text-gray-600">
@@ -323,7 +323,7 @@ export default function OrderDetailPage({
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <CreditCard className="h-5 w-5 text-[#A76BCF]" />
+                  <CreditCard className="h-5 w-5 text-sec-main" />
                   Payment
                 </CardTitle>
               </CardHeader>
@@ -362,7 +362,7 @@ export default function OrderDetailPage({
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Truck className="h-5 w-5 text-[#A76BCF]" />
+                  <Truck className="h-5 w-5 text-sec-main" />
                   Shipping
                 </CardTitle>
               </CardHeader>

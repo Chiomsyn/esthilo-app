@@ -214,7 +214,7 @@ export default function AdminOrdersPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="font-serif text-3xl font-bold text-[#A76BCF]">
+          <h1 className="font-serif text-3xl font-bold text-sec-main">
             Orders
           </h1>
           <p className="text-gray-600 mt-1">
@@ -329,29 +329,29 @@ export default function AdminOrdersPage() {
                   </SelectContent>
                 </Select>
 
-                <Button variant="outline" size="icon">
+                <Button variant="outlined" size="sm">
                   <Filter className="h-4 w-4" />
                 </Button>
               </div>
             </div>
 
             {selectedOrders.length > 0 && (
-              <div className="flex items-center gap-4 mt-4 p-3 bg-[#A76BCF]/10 rounded-lg">
+              <div className="flex items-center gap-4 mt-4 p-3 bg-sec-main/10 rounded-lg">
                 <span className="text-sm font-medium">
                   {selectedOrders.length} orders selected
                 </span>
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="text-[#A76BCF] border-[#A76BCF] bg-transparent"
+                    variant="outlined"
+                    className="text-sec-main border-sec-main bg-transparent"
                   >
                     Update Status
                   </Button>
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="text-[#A76BCF] border-[#A76BCF] bg-transparent"
+                    variant="outlined"
+                    className="text-sec-main border-sec-main bg-transparent"
                   >
                     Export Selected
                   </Button>
@@ -475,12 +475,12 @@ export default function AdminOrdersPage() {
                       </td>
                       <td className="p-4">
                         <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
+                          <DropdownMenuTrigger>
+                            <Button variant="outlined" size="sm">
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
+                          <DropdownMenuContent>
                             <DropdownMenuItem>
                               <Eye className="h-4 w-4 mr-2" />
                               View Details
