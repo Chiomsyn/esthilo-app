@@ -97,6 +97,7 @@ type GenOrder = Order & {
     orderId: string;
     imageId: string | null;
     price: number;
+    size: string | null;
   }[];
   shippingAddress: ShippingAddressSchema;
   paymentResult: PaymentResult | null;

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PaymentResult } from "@/lib/types/type";
 import { Order } from "@prisma/client";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, Mail, Package, Truck } from "lucide-react";
+import { CheckCircle, Mail, Package, Truck } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -53,7 +53,7 @@ const ConfirmationInfo = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="text-[#A76BCF] font-medium"
+          className="text-sec-main font-medium"
         >
           Order #{order.id}
         </motion.p>
@@ -79,10 +79,10 @@ const ConfirmationInfo = ({
           transition={{ delay: 0.8, duration: 0.6 }}
           className="mt-6 flex justify-end space-x-4"
         >
-          <Button asChild className="bg-[#A76BCF]">
+          <Button asChild className="bg-sec-main">
             <Link href={`/account/order/${order.id}`}>View Order Details</Link>
           </Button>
-          <Button variant="outline" asChild>
+          <Button variant="outlined" asChild>
             <Link href="/account">View All Orders</Link>
           </Button>
         </motion.div>
@@ -95,7 +95,7 @@ const ConfirmationInfo = ({
       >
         <Card>
           <CardContent className="p-6 text-center">
-            <Package className="h-8 w-8 text-[#A76BCF] mx-auto mb-4" />
+            <Package className="h-8 w-8 text-sec-main mx-auto mb-4" />
             <h3 className="font-semibold mb-2">Order Processing</h3>
             <p className="text-sm text-gray-600">
               Your order is being prepared for shipment
@@ -105,7 +105,7 @@ const ConfirmationInfo = ({
 
         <Card>
           <CardContent className="p-6 text-center">
-            <Truck className="h-8 w-8 text-[#A76BCF] mx-auto mb-4" />
+            <Truck className="h-8 w-8 text-sec-main mx-auto mb-4" />
             <h3 className="font-semibold mb-2">Estimated Delivery</h3>
             <p className="text-sm text-gray-600">As soon as possible</p>
           </CardContent>
@@ -113,7 +113,7 @@ const ConfirmationInfo = ({
 
         <Card>
           <CardContent className="p-6 text-center">
-            <Mail className="h-8 w-8 text-[#A76BCF] mx-auto mb-4" />
+            <Mail className="h-8 w-8 text-sec-main mx-auto mb-4" />
             <h3 className="font-semibold mb-2">Email Confirmation</h3>
             <p className="text-sm text-gray-600">Sent to your email address</p>
           </CardContent>
@@ -128,9 +128,9 @@ const ConfirmationInfo = ({
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/products">
             <Button
-              variant="outline"
+              variant="outlined"
               size="lg"
-              className="border-[#A76BCF] text-[#A76BCF] hover:bg-[#A76BCF] hover:text-white bg-transparent"
+              className="border-sec-main text-sec-main hover:bg-sec-main hover:text-white bg-transparent"
             >
               Continue Shopping
             </Button>
@@ -140,10 +140,10 @@ const ConfirmationInfo = ({
         <p className="text-sm text-gray-500 mt-8">
           Questions about your order? Contact our customer service team at{" "}
           <a
-            href="mailto:support@luxeparfum.com"
-            className="text-[#A76BCF] hover:underline"
+            href="mailto:support@esthilo.com"
+            className="text-sec-main hover:underline"
           >
-            support@luxeparfum.com
+            support@esthilo.com
           </a>
         </p>
       </motion.div>

@@ -4,12 +4,10 @@ import { Button } from "@/components/ui/button";
 import { PaymentResult } from "@/lib/types/type";
 import { ShippingAddressSchema } from "@/lib/validators";
 import { sendPurchaseReceipt } from "@/services/email";
-import { paystack } from "@/services/paystack";
-import { motion } from "framer-motion";
-import { Check, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ConfirmationInfo from "./confirmation-info";
+import { paystack } from "@/services/paystack";
 
 const PaystackSuccessPage = async ({
   params,

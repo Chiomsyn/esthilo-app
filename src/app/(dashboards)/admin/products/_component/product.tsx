@@ -176,7 +176,7 @@ export default function Product({ products, brands, counts }: ProductProps) {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="font-serif text-3xl font-bold text-[#A76BCF]">
+          <h1 className="font-serif text-3xl font-bold text-sec-main">
             Products
           </h1>
           <p className="text-gray-600 mt-1">

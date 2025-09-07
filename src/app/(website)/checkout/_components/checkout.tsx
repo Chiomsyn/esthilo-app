@@ -100,7 +100,7 @@ export default function CheckoutPage({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-charcoal hover:text-[#A76BCF]"
+                className="text-charcoal hover:text-sec-main"
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
@@ -118,7 +118,7 @@ export default function CheckoutPage({
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                       step >= stepNumber
-                        ? "bg-[#A76BCF] text-white"
+                        ? "bg-sec-main text-white"
                         : "bg-gray-200 text-gray-600"
                     }`}
                   >
@@ -126,7 +126,7 @@ export default function CheckoutPage({
                   </div>
                   <span
                     className={`ml-2 text-sm ${
-                      step >= stepNumber ? "text-[#A76BCF]" : "text-gray-500"
+                      step >= stepNumber ? "text-sec-main" : "text-gray-500"
                     }`}
                   >
                     {stepNumber === 1 && "Information"}
@@ -155,7 +155,7 @@ export default function CheckoutPage({
                     <Card>
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                          <span className="w-6 h-6 bg-[#A76BCF] text-white rounded-full flex items-center justify-center text-sm">
+                          <span className="w-6 h-6 bg-sec-main text-white rounded-full flex items-center justify-center text-sm">
                             1
                           </span>
                           Contact Information
@@ -292,7 +292,7 @@ export default function CheckoutPage({
                     <Card>
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                          <Truck className="h-5 w-5 text-[#A76BCF]" />
+                          <Truck className="h-5 w-5 text-sec-main" />
                           Shipping Method
                         </CardTitle>
                       </CardHeader>
@@ -362,7 +362,7 @@ export default function CheckoutPage({
                     <Card>
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                          <CreditCard className="h-5 w-5 text-[#A76BCF]" />
+                          <CreditCard className="h-5 w-5 text-sec-main" />
                           Payment Information
                         </CardTitle>
                       </CardHeader>
@@ -449,7 +449,7 @@ export default function CheckoutPage({
                       type="button"
                       variant="outline"
                       onClick={() => setStep(step - 1)}
-                      className="border-[#A76BCF] text-[#A76BCF] hover:bg-[#A76BCF] hover:text-white"
+                      className="border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
                     >
                       <ArrowLeft className="h-4 w-4 mr-2" />
                       Back
@@ -457,7 +457,7 @@ export default function CheckoutPage({
                   )}
                   <Button
                     type="submit"
-                    className="bg-[#A76BCF] hover:bg-[#A76BCF]/90 text-white ml-auto"
+                    className="bg-sec-main hover:bg-sec-main/90 text-white ml-auto"
                     size="lg"
                   >
                     {step === 3 ? "Complete Order" : "Continue"}

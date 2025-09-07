@@ -151,7 +151,7 @@ const CheckoutComp = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-charcoal hover:text-[#A76BCF]"
+                className="text-charcoal hover:text-sec-main"
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
@@ -172,7 +172,7 @@ const CheckoutComp = ({
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <span className="w-6 h-6 bg-[#A76BCF] text-white rounded-full flex items-center justify-center text-sm">
+                      <span className="w-6 h-6 bg-sec-main text-white rounded-full flex items-center justify-center text-sm">
                         1
                       </span>
                       Contact Information
@@ -289,7 +289,7 @@ const CheckoutComp = ({
                       disabled={
                         formData.paymentMethod === "paystack" && !paystackReady
                       }
-                      className="bg-[#A76BCF] hover:bg-[#A76BCF]/90 text-white ml-auto"
+                      className="bg-sec-main hover:bg-sec-main/90 text-white ml-auto"
                       size="lg"
                     >
                       Place Order
