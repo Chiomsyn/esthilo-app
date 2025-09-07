@@ -54,9 +54,103 @@ const Navbar = ({ cartCount }: { cartCount: number }) => {
           <HamburgerIcon size="36" className="text-white" />
         </div>
         <div className="flex gap-3 items-center">
-          <MagnifyingGlassIcon size="20" className="text-white" />
-          <UserIcon size="20" className="text-white" />
-          <CartIcon size="20" className="text-white" />
+          {/* <MagnifyingGlassIcon size="20" className="text-white" /> */}
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-charcoal hover:bg-sec-main cursor-pointer"
+              >
+                <User className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 bg-gray-50 text-gray-500">
+              {session.data ? (
+                <>
+                  <div className="px-3 py-2">
+                    <p className="text-sm font-medium">{name}</p>
+                    <p className="text-xs">{email}</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Link
+                      href={role === "admin" ? "/admin" : "/account"}
+                      className="flex items-center"
+                    >
+                      <User className="mr-2 h-4 w-4" />
+                      My Account
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      href={
+                        role === "admin" ? "/admin/orders" : "/account/orders"
+                      }
+                      className="flex items-center"
+                    >
+                      <Package className="mr-2 h-4 w-4" />
+                      {role === "admin" ? "Orders" : "My Orders"}
+                    </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem>
+                    <Link
+                      href={
+                        role === "admin"
+                          ? "/admin/settings"
+                          : "/account/settings"
+                      }
+                      className="flex items-center"
+                    >
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={async () => {
+                      await signOutUser();
+
+                      router.push("/login");
+                    }}
+                    className="text-red-600 focus:text-red-600"
+                  >
+                    Sign Out
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <div>
+                  <DropdownMenuItem className="group">
+                    <Link href="/login" className="flex  items-center">
+                      <LogIn className="mr-2 h-4 w-4 group-hover:text-sec-main" />
+                      <p className="group-hover:text-sec-main">Sign In</p>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="group">
+                    <Link href="/register" className="flex items-center">
+                      <UserPlus className="mr-2 h-4 w-4 group-hover:text-sec-main" />
+                      <p className="group-hover:text-sec-main">
+                        Create Account
+                      </p>
+                    </Link>
+                  </DropdownMenuItem>
+                </div>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Link href="/cart">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hover:text-black text-white hover:bg-sec-main relative cursor-pointer"
+            >
+              <CartIcon size="20" className="" />
+              <span className="absolute -top-1 -right-1 text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                {cartCount}
+              </span>
+            </Button>
+          </Link>{" "}
         </div>
       </div>
       <div className="lg:flex flex-row gap-4 pr-4 hidden w-full wrapper items-center text-white justify-between">
