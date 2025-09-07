@@ -53,7 +53,7 @@ const Navbar = ({ cartCount }: { cartCount: number }) => {
         <div className="cursor-pointer" onClick={onOpen}>
           <HamburgerIcon size="36" className="text-white" />
         </div>
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-3 items-center text-white">
           {/* <MagnifyingGlassIcon size="20" className="text-white" /> */}
           <DropdownMenu>
             <DropdownMenuTrigger>
