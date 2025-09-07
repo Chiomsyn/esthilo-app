@@ -115,7 +115,7 @@ export default function OrdersList({
                   </TableCell>
                   <TableCell>
                     <Link href={`/account/order/${order.id}`}>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outlined" size="sm">
                         <Eye className="h-4 w-4" />
                       </Button>
                     </Link>
