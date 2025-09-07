@@ -9,7 +9,7 @@ const RemoveBtn = ({ id }: { id: string }) => {
   return (
     <Button
       disabled={isPending}
-      variant="outline"
+      variant="outlined"
       type="button"
       onClick={() =>
         startTransition(async () => {

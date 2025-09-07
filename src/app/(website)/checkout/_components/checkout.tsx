@@ -99,7 +99,7 @@ export default function CheckoutPage({
             <Link href="/cart">
               <Button
                 variant="ghost"
-                size="icon"
+                size="sm"
                 className="text-charcoal hover:text-sec-main"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -304,7 +304,7 @@ export default function CheckoutPage({
                           }
                         >
                           <div className="flex items-center space-x-2 p-4 border rounded-lg">
-                            <RadioGroupItem value="standard" id="standard" />
+                            <RadioGroupItem value="standard" />
                             <div className="flex-1">
                               <Label htmlFor="standard" className="font-medium">
                                 Standard Shipping
@@ -319,7 +319,7 @@ export default function CheckoutPage({
                           </div>
 
                           <div className="flex items-center space-x-2 p-4 border rounded-lg">
-                            <RadioGroupItem value="express" id="express" />
+                            <RadioGroupItem value="express" />
                             <div className="flex-1">
                               <Label htmlFor="express" className="font-medium">
                                 Express Shipping
@@ -332,7 +332,7 @@ export default function CheckoutPage({
                           </div>
 
                           <div className="flex items-center space-x-2 p-4 border rounded-lg">
-                            <RadioGroupItem value="overnight" id="overnight" />
+                            <RadioGroupItem value="overnight" />
                             <div className="flex-1">
                               <Label
                                 htmlFor="overnight"
@@ -447,7 +447,7 @@ export default function CheckoutPage({
                   {step > 1 && (
                     <Button
                       type="button"
-                      variant="outline"
+                      variant="outlined"
                       onClick={() => setStep(step - 1)}
                       className="border-sec-main text-sec-main hover:bg-sec-main hover:text-white"
                     >
