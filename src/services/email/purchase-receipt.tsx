@@ -49,6 +49,7 @@ PurchaseReceiptEmail.PreviewProps = {
         imageId: "",
         price: 500,
         id: "",
+        size: "",
       },
     ],
     isDelivered: true,
