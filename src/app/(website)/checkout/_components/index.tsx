@@ -64,17 +64,23 @@ const CheckoutComp = ({
     setPaystackReady(true);
   };
 
-  const handlePaymentSuccess = (
-    response: { reference: string },
-    id: string
-  ) => {
+  const handlePaymentSuccess = async (response: { reference: string }) => {
+    console.log("handlePaymentSuccess");
+    const res = await createOrder({
+      data: formData,
+    });
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
     router.push(
-      `order-confirmation/${id}/paystack-payment-success?reference=${response.reference}`
+      `order-confirmation/${res.id}/paystack-payment-success?reference=${response.reference}`
     );
     // Send reference to your backend to verify & activate subscription
   };
 
-  const getPaystackConfig = (id: string) => {
+  const getPaystackConfig = () => {
+    console.log("getPaystackConfig");
     return {
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
       email: formData.email,
@@ -87,20 +93,20 @@ const CheckoutComp = ({
         subscriptionId: "",
       },
       callback: (response: { reference: string }) =>
-        handlePaymentSuccess(response, id),
+        handlePaymentSuccess(response),
       onClose: () => {
         console.log("Payment window closed");
       },
     };
   };
 
-  const handleSubscribe = (id: string) => {
+  const handleSubscribe = () => {
     if (!paystackReady || !window.PaystackPop) {
       toast.error("Payment system is not ready yet. Please try again.");
       return;
     }
 
-    const config = getPaystackConfig(id);
+    const config = getPaystackConfig();
     if (!config) return;
 
     const handler = window.PaystackPop.setup(config);
@@ -127,15 +133,7 @@ const CheckoutComp = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     startTransition(async () => {
-      const res = await createOrder({
-        data: formData,
-      });
-      if (!res.success) {
-        toast.error(res.message);
-        return;
-      }
-
-      handleSubscribe(res.id ?? "");
+      handleSubscribe();
     });
   };
   return (

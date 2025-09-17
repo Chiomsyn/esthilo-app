@@ -46,7 +46,7 @@ const ContactForm = () => {
             </div>
             <div>
               <strong className="text-pretty">Phone Number</strong>
-              <p className="text-sm text-gray-500">+234 812 345 6789</p>
+              <p className="text-sm text-gray-500">+234 803 737 4224</p>
             </div>
           </div>
           {/* Email */}
@@ -56,7 +56,7 @@ const ContactForm = () => {
             </div>
             <div>
               <strong className="text-pretty">Email Address</strong>
-              <p className="text-sm text-gray-500">lawson@gmail.com</p>
+              <p className="text-sm text-gray-500">ezeamamaesther@yahoo.com</p>
             </div>
           </div>
           {/* Location */}
@@ -66,7 +66,9 @@ const ContactForm = () => {
             </div>
             <div>
               <strong className="text-pretty">Location</strong>
-              <p className="text-sm text-gray-500">No 6 Ezeala Str.</p>
+              <p className="text-sm text-gray-500">
+                River Park Estate Lugbe Abuja.
+              </p>
             </div>
           </div>
         </motion.div>

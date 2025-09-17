@@ -23,8 +23,6 @@ const AddToCart = ({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  console.log("item", item);
-
   const existItem = cart?.items.find((x) => x.productId === item.productId);
 
   const handleAddToCart = async () => {
